@@ -1,0 +1,15 @@
+# Virtual Environments
+venv_*/
+
+# Model Weights and Samples
+weights/
+ext_weights/
+samples/
+
+# External Repositories/Folders
+MMAudio/
+
+# Python cache and system files
+__pycache__/
+*.pyc
+.DS_Store
