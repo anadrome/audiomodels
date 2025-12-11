@@ -17,34 +17,21 @@ Audio Open EULA. Put your token in the `HF_TOKEN` environment variable.
 
 ## AudioLDM2 installation
 
-1.  Clone the repository:
-    ```bash
-    mkdir -p repos
-    git clone https://github.com/haoheliu/AudioLDM2.git repos/AudioLDM2
-    ```
-
-2.  Install:
-    ```bash
-    python3 -m venv venv_audioldm2
-    source venv_audioldm2/bin/activate
-    pip install wheel setuptools
-    pip install -e repos/AudioLDM2
-    ```
+```bash
+python3 -m venv venv_audioldm2
+source venv_audioldm2/bin/activate
+pip install wheel setuptools
+pip install git+https://github.com/haoheliu/AudioLDM2.git
+```
 
 ## MMAudio installation
 
-MMAudio requires downgrading to a pre-1.x `huggingface_hub`.0.
+MMAudio requires downgrading to a pre-1.x `huggingface_hub` and is missing a
+dependency.
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/hkchengrex/MMAudio.git repos/MMAudio
-    ```
-
-2.  Install:
-    ```bash
-    python3 -m venv venv_mmaudio
-    source venv_mmaudio/bin/activate
-    pip install "huggingface_hub<1.0"
-    pip install -e repos/MMAudio
-    pip install torchaudio
-    ```
+```bash
+python3 -m venv venv_mmaudio
+source venv_mmaudio/bin/activate
+pip install "huggingface_hub<1.0" torchaudio
+pip install git+https://github.com/hkchengrex/MMAudio.git
+```
