@@ -36,8 +36,26 @@ def get_esc_50_level_2_labels(esc_50_labels):
 esc_50_level_1_labels = get_esc_50_level_1_labels(esc_50_labels)
 esc_50_level_2_labels = get_esc_50_level_2_labels(esc_50_labels)
 
-pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float16)
-pipe = pipe.to("cuda")
+import sys
+from diffusers import DPMSolverMultistepScheduler
+
+if sys.platform == "darwin":
+    if torch.backends.mps.is_available():
+        device = "mps"
+    else:
+        device = "cpu"
+    pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float32)
+    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+else:
+    if torch.cuda.is_available():
+        device = "cuda"
+        dtype = torch.float16
+    else:
+        device = "cpu"
+        dtype = torch.float32
+    pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=dtype)
+
+pipe = pipe.to(device)
 
 def prompt_to_folderfile_name(prompt):
   underscore_name = prompt.replace(" ", "_").lower()
@@ -57,7 +75,7 @@ if __name__ == "__main__":
 
 
             random_seed = RND_BASE + prompt_index + gen_audio_index
-            generator = torch.Generator("cuda").manual_seed(random_seed)        # Generator Random Seed
+            generator = torch.Generator(device).manual_seed(random_seed)        # Generator Random Seed
 
             audio = pipe(
                 "Sound of " + esc_50_level_2_labels[prompt_index],

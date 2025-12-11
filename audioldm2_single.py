@@ -16,7 +16,13 @@ def prompt_to_folder_name(prompt):
 target_dir = os.path.join(ROOT_DIR, prompt_to_folder_name(prompt))
 os.makedirs(target_dir, exist_ok=True)
 
-mode = "cuda"
+import torch
+if torch.cuda.is_available():
+    mode = "cuda"
+elif torch.backends.mps.is_available():
+    mode = "mps"
+else:
+    mode = "cpu"
 
 for i in range(NUM_SAMPLES_PER_PROMPT):
     seed = RND_BASE + i

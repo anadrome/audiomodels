@@ -2,11 +2,13 @@ import torch
 import os
 import soundfile as sf
 
-from diffusers import StableAudioPipeline
+from diffusers import StableAudioPipeline, DPMSolverMultistepScheduler
 
 ROOT_DIR="samples/stableaudio"
 NUM_SAMPLES_PER_PROMPT = 1
 RND_BASE = 12345
+
+import sys
 
 # Generator Parameter Values
 GEN_PARAM_NUM_INFERENCE_STEPS = 100
@@ -16,8 +18,27 @@ GEN_PARAM_NUM_WAVEFORMS_PER_PROMPT = 1
 # Output File Value
 GEN_AUDIO_SAMPLE_RATE = 44100
 
-pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float16)
-pipe = pipe.to("cuda")
+if sys.platform == "darwin":
+    # macOS: Use MPS if available, and a different scheduler to avoid torchsde recursion issues
+    if torch.backends.mps.is_available():
+        device = "mps"
+    else:
+        device = "cpu"
+
+    pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float32)
+    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+else:
+    # Linux/Other: Use CUDA if available and default scheduler
+    if torch.cuda.is_available():
+        device = "cuda"
+        dtype = torch.float16
+    else:
+        device = "cpu"
+        dtype = torch.float32
+
+    pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=dtype)
+
+pipe = pipe.to(device)
 
 def prompt_to_folderfile_name(prompt):
   underscore_name = prompt.replace(" ", "_").lower()
@@ -37,7 +58,7 @@ if __name__ == "__main__":
         random_seed = RND_BASE + i
         print(f"Generating sample {i+1}/{NUM_SAMPLES_PER_PROMPT} with seed {random_seed}...")
         
-        generator = torch.Generator("cuda").manual_seed(random_seed)        # Generator Random Seed
+        generator = torch.Generator(device).manual_seed(random_seed)        # Generator Random Seed
 
         audio = pipe(
             prompt,

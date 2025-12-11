@@ -56,7 +56,12 @@ if __name__ == "__main__":
       seq_cfg.duration = GEN_AUDIO_DURATION_IN_S
       seq_cfg.sampling_rate = GEN_AUDIO_SAMPLE_RATE
 
-      device = 'cuda' if torch.cuda.is_available() else 'cpu'
+      if torch.cuda.is_available():
+          device = 'cuda'
+      elif torch.backends.mps.is_available():
+          device = 'mps'
+      else:
+          device = 'cpu'
       dtype = torch.bfloat16
 
       net = get_my_mmaudio(model_name).to(device, dtype).eval()

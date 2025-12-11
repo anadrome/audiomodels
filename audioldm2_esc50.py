@@ -17,7 +17,14 @@ NUM_SAMPLES_PER_PROMPT = 100
 RND_BASE = 12340
 MODEL="audioldm_48k"
 
-mode = "cuda"
+import torch
+if torch.cuda.is_available():
+    mode = "cuda"
+elif torch.backends.mps.is_available():
+    mode = "mps"
+else:
+    mode = "cpu"
+
 for item in sounds:
   for c in range(100):
     seed = RND_BASE + c
