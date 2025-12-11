@@ -23,7 +23,7 @@ for i in range(NUM_SAMPLES_PER_PROMPT):
     print(f"Generating sample {i+1}/{NUM_SAMPLES_PER_PROMPT} with seed {seed}...")
     
     # Run generation
-    x = f'venv_audioldm2/bin/audioldm2 -t "{prompt}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {mode} -s {ROOT_DIR}'
+    x = f'audioldm2 -t "{prompt}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {mode} -s {ROOT_DIR}'
     subprocess.run(x, shell=True)
     
     # Post-processing: Find and move the generated file
