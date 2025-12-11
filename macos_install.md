@@ -68,8 +68,8 @@ AudioLDM2 can use a newer `transformers` with a small patch.
 
 ## MMAudio installation
 
-MMAudio requires relaxing a few dependency relaxations and downgrading to a
-pre-1.x `huggingface_hub`.
+MMAudio requires relaxing a few dependencies and downgrading to a pre-1.x
+`huggingface_hub`.
 
 1.  Clone the repository:
     ```bash

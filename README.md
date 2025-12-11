@@ -13,7 +13,18 @@ authentication token in the environment variable `HF_TOKEN`.
   interface
 
 Each model should also use a separate Python venv due to conflicting
-dependencies.
+dependencies. MacOS needs some additional workarounds, documented in
+[`macos_install.md`](macos_install.md).
+
+Once installed, there are three scripts for each model:
+* `*_single.py`: generates N samples for a single prompt (both the prompt and N
+  can be set inside the script)
+* `*_esc50.py`: Re-runs the ESC-50 experiments from our paper, i.e. 100 samples
+  each for the prompt "Sound of [label]" for each label in ESC-50. Note:
+  generates 5000 audio files and will take a while!
+* `*_param_count.py`: Counts the number of parameters in each model. Added
+  because I got frustrated trying to figure out how big the models were from
+  their papers (they are all about 1b parameters, as it turns out).
 
 Our initial paper:
 
