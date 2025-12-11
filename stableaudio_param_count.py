@@ -2,8 +2,8 @@ import torch
 from diffusers import StableAudioPipeline
 
 # Load the pipeline
-pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float16)
-pipe = pipe.to("cuda")
+pipe = StableAudioPipeline.from_pretrained("stabilityai/stable-audio-open-1.0", torch_dtype=torch.float32)
+pipe = pipe.to("cpu")
 
 # Count the parameters
 total_params = 0

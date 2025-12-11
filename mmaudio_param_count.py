@@ -6,8 +6,8 @@ from mmaudio.eval_utils import all_model_cfg
 model_name = 'large_44k_v2'
 model_config = all_model_cfg[model_name]
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-dtype = torch.bfloat16
+device = 'cpu'
+dtype = torch.float32
 
 # Build the model
 net = get_my_mmaudio(model_name).to(device, dtype).eval()

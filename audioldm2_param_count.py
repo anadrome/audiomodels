@@ -2,7 +2,7 @@ from audioldm2 import build_model
 import torch
 
 model_name = "audioldm_48k"
-device = "cuda"
+device = "cpu"
 
 # Build the model
 audioldm2 = build_model(model_name=model_name, device=device)
