@@ -7,16 +7,17 @@ from mmaudio.eval_utils import generate, all_model_cfg
 from mmaudio.model.utils.features_utils import FeaturesUtils
 import os
 
+# User input here (prompt & number of samples)
+prompt = "dramatic sound of glass breaking, cinematic, high-fidelity"
+NUM_SAMPLES_PER_PROMPT = 3
+
 ROOT_DIR="samples/mmaudio"
-NUM_SAMPLES_PER_PROMPT = 1
 RND_BASE = 12345
 
 # Generator Parameter Values
 GEN_PARAM_NUM_INFERENCE_STEPS = 100
 GEN_PARAM_LEN_IN_SEC = 10.0
 GEN_PARAM_NUM_WAVEFORMS_PER_PROMPT = 1
-
-# Output File Value
 GEN_AUDIO_SAMPLE_RATE = 44100
 GEN_AUDIO_DURATION_IN_S = 10
 
@@ -24,12 +25,10 @@ def prompt_to_filename(prompt):
   underscore_name = prompt.replace(" ", "_").lower()
   return underscore_name
 
-# MMAudio Models: 'small_16k', 'small_44k', 'medium_44k', 'large_44k', 'large_44k_v2'
-
 if __name__ == "__main__":
-    ## Model Setup
+    # Model Setup
     with torch.no_grad():
-      model_name = 'large_44k_v2'
+      model_name = 'large_44k_v2' # MMAudio Models: 'small_16k', 'small_44k', 'medium_44k', 'large_44k', 'large_44k_v2'
       model_config = all_model_cfg[model_name]
       model_config.download_if_needed()
 
@@ -59,14 +58,11 @@ if __name__ == "__main__":
 
       net.update_seq_lengths(seq_cfg.latent_seq_len, seq_cfg.clip_seq_len, seq_cfg.sync_seq_len)
 
-      ## Main Logic for single prompt
-      prompt = "Dog barking" # Single prompt for generation
+      # Generate
       gen_audio_name = prompt_to_filename(prompt)
       audio_class_folder = f"{ROOT_DIR}/{gen_audio_name}"
       if not os.path.exists(audio_class_folder):
         os.makedirs(audio_class_folder)
-
-      NUM_SAMPLES_PER_PROMPT = 3 # Update to 3 samples
       
       for i in range(NUM_SAMPLES_PER_PROMPT):
           random_seed = RND_BASE + i

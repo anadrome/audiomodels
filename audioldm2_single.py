@@ -3,12 +3,13 @@ import os
 import shutil
 import glob
 
-ROOT_DIR="samples/audioldm2"
+# User input here (prompt & number of samples)
+prompt = "dramatic sound of glass breaking, cinematic, high-fidelity"
 NUM_SAMPLES_PER_PROMPT = 3
+
+ROOT_DIR="samples/audioldm2"
 RND_BASE = 12340
 MODEL="audioldm_48k"
-
-prompt = "Dog barking" # Single prompt for generation
 
 def prompt_to_folder_name(prompt):
     return prompt.replace(" ", "_").lower()
@@ -28,16 +29,14 @@ for i in range(NUM_SAMPLES_PER_PROMPT):
     seed = RND_BASE + i
     print(f"Generating sample {i+1}/{NUM_SAMPLES_PER_PROMPT} with seed {seed}...")
     
-    # Run generation
+    # Generate via separate CLI script
     x = f'audioldm2 -t "{prompt}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {mode} -s {ROOT_DIR}'
     subprocess.run(x, shell=True)
     
-    # Post-processing: Find and move the generated file
-    # AudioLDM2 creates a new folder for each run inside ROOT_DIR
-    # We look for the most recently created folder
+    # Post-processing:
+    # AudioLDM2 creates a new folder named with a timestamp for each run.
+    # Look for the most recently created folder, move the file out, and delete it.
     subdirs = glob.glob(os.path.join(ROOT_DIR, "*"))
-    # Filter only directories that look like timestamps (optional, but safer if there are other files)
-    # For simplicity, just finding the newest directory that isn't our target_dir
     candidate_dirs = [d for d in subdirs if os.path.isdir(d) and os.path.abspath(d) != os.path.abspath(target_dir)]
     
     if candidate_dirs:
@@ -49,7 +48,6 @@ for i in range(NUM_SAMPLES_PER_PROMPT):
             print(f"Moving {source_file} to {dest_file}")
             shutil.move(source_file, dest_file)
             
-            # Clean up the empty directory
             try:
                 os.rmdir(latest_dir)
             except OSError:
