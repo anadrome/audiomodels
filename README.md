@@ -3,18 +3,11 @@ Scripts to experiment with three open-weights text-to-audio models:
 * [MMAudio](https://github.com/hkchengrex/MMAudio)
 * [AudioLDM2](https://github.com/haoheliu/AudioLDM2)
 
-Each model needs to be installed and run a bit differently, alas:
-* Stable Audio Open is hosted on Huggingface and is run via the `diffusers`
-  library. It requires accepting the EULA on Huggingface and putting an HF
-authentication token in the environment variable `HF_TOKEN`.
-* MMAudio is run by cloning the GitHub repo and installing it as a local
-  package in Python
-* AudioLDM2 is run by cloning the GitHub repo and using its command-line
-  interface
-
-Each model should also use a separate Python venv due to conflicting
-dependencies. MacOS needs some additional workarounds, documented in
-[`macos_install.md`](macos_install.md).
+Each model needs to be installed and run a bit differently, and in separate
+Python venvs due to conflicting dependencies. See
+[`linux_install.md`](linux_install.md) or
+[`macos_install.md`](macos_install.md). Running on MacOS in particular needs a
+few patches and workarounds.
 
 Once installed, there are three scripts for each model:
 * `*_single.py`: generates N samples for a single prompt (both the prompt and N
