@@ -1,14 +1,8 @@
-from huggingface_hub import login
 import torch
 import os
 import soundfile as sf
 
 from diffusers import StableAudioPipeline
-
-hf_key = os.environ.get("HF_TOKEN")
-if not hf_key:
-    raise ValueError("HF_TOKEN environment variable is not set. Please set it to your Hugging Face token.")
-login(hf_key)
 
 ROOT_DIR="samples/stableaudio"
 NUM_SAMPLES_PER_PROMPT = 1
