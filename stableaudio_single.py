@@ -39,12 +39,12 @@ else:
 
 pipe = pipe.to(device)
 
-def prompt_to_folderfile_name(prompt):
+def prompt_to_filename(prompt):
   underscore_name = prompt.replace(" ", "_").lower()
   return underscore_name
 
 if __name__ == "__main__":
-    label = prompt_to_folderfile_name(prompt)
+    label = prompt_to_filename(prompt)
     gen_audio_folder = f"{ROOT_DIR}/{label}"
 
     if not os.path.exists(gen_audio_folder):

@@ -81,13 +81,11 @@ if __name__ == "__main__":
       ## Main Loops
       for i in range(len(esc_50_level_2_labels)):
         gen_audio_name = prompt_to_filename(esc_50_level_2_labels[i])
+        audio_class_folder = f"{ROOT_DIR}/{gen_audio_name}"
+        if not os.path.exists(audio_class_folder):
+          os.makedirs(audio_class_folder)
+
         for j in range(NUM_SAMPLES_PER_PROMPT):
-          if j == 0:
-            audio_class_folder = f"{ROOT_DIR}/{gen_audio_name}"
-            if not os.path.exists(audio_class_folder):
-              os.makedirs(audio_class_folder)
-
-
           random_seed = RND_BASE + i + j
 
           rng = torch.Generator(device=device)

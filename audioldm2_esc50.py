@@ -19,14 +19,14 @@ MODEL="audioldm_48k"
 
 import torch
 if torch.cuda.is_available():
-    mode = "cuda"
+    device = "cuda"
 elif torch.backends.mps.is_available():
-    mode = "mps"
+    device = "mps"
 else:
-    mode = "cpu"
+    device = "cpu"
 
 for item in sounds:
   for c in range(100):
     seed = RND_BASE + c
-    x = f'audioldm2 -t "Sound of {item}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {mode} -s {ROOT_DIR}'
+    x = f'audioldm2 -t "Sound of {item}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {device} -s {ROOT_DIR}'
     subprocess.run(x, shell=True)

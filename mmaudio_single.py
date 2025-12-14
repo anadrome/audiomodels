@@ -1,6 +1,5 @@
 import torch
 import torchaudio
-import soundfile as sf
 from mmaudio.model.networks import get_my_mmaudio
 from mmaudio.model.flow_matching import FlowMatching
 from mmaudio.eval_utils import generate, all_model_cfg
@@ -88,6 +87,5 @@ if __name__ == "__main__":
           )
 
           audio = audios.float().cpu()[0]
-          generated_output = audio.T.numpy()
           gen_audio_filename_path = f"{audio_class_folder}/{i+1:03d}.wav" 
-          sf.write(gen_audio_filename_path, generated_output, seq_cfg.sampling_rate)
+          torchaudio.save(gen_audio_filename_path, audio, seq_cfg.sampling_rate)

@@ -1,7 +1,7 @@
 Scripts to experiment with three open-weights text-to-audio models:
 * [Stable Audio Open](https://huggingface.co/stabilityai/stable-audio-open-1.0)
-* [MMAudio](https://github.com/hkchengrex/MMAudio)
 * [AudioLDM2](https://github.com/haoheliu/AudioLDM2)
+* [MMAudio](https://github.com/hkchengrex/MMAudio)
 
 Each model needs to be installed and run a bit differently, and in separate
 Python venvs due to conflicting dependencies. See

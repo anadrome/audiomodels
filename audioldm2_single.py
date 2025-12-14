@@ -19,18 +19,18 @@ os.makedirs(target_dir, exist_ok=True)
 
 import torch
 if torch.cuda.is_available():
-    mode = "cuda"
+    device = "cuda"
 elif torch.backends.mps.is_available():
-    mode = "mps"
+    device = "mps"
 else:
-    mode = "cpu"
+    device = "cpu"
 
 for i in range(NUM_SAMPLES_PER_PROMPT):
     seed = RND_BASE + i
     print(f"Generating sample {i+1}/{NUM_SAMPLES_PER_PROMPT} with seed {seed}...")
     
     # Generate via separate CLI script
-    x = f'audioldm2 -t "{prompt}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {mode} -s {ROOT_DIR}'
+    x = f'audioldm2 -t "{prompt}" --model {MODEL} --seed {seed} --ddim_steps 200 -d {device} -s {ROOT_DIR}'
     subprocess.run(x, shell=True)
     
     # Post-processing:
@@ -47,11 +47,7 @@ for i in range(NUM_SAMPLES_PER_PROMPT):
             dest_file = os.path.join(target_dir, f"{i+1:03d}.wav")
             print(f"Moving {source_file} to {dest_file}")
             shutil.move(source_file, dest_file)
-            
-            try:
-                os.rmdir(latest_dir)
-            except OSError:
-                print(f"Warning: Could not remove directory {latest_dir}")
+            os.rmdir(latest_dir)
         else:
             print(f"Warning: Expected generated file {source_file} not found.")
     else:

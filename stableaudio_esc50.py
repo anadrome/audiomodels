@@ -57,7 +57,7 @@ else:
 
 pipe = pipe.to(device)
 
-def prompt_to_folderfile_name(prompt):
+def prompt_to_filename(prompt):
   underscore_name = prompt.replace(" ", "_").lower()
   return underscore_name
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
 
     for prompt_index in range(len(esc_50_level_2_labels)):                                # for each prompt
-        folder_name = prompt_to_folderfile_name(esc_50_level_2_labels[prompt_index])
+        folder_name = prompt_to_filename(esc_50_level_2_labels[prompt_index])
         gen_audio_folder = f"{ROOT_DIR}/{folder_name}"
 
         for gen_audio_index in range(NUM_SAMPLES_PER_PROMPT):                   # for each audio file to generate per prompt
