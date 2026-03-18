@@ -1,7 +1,8 @@
-Scripts to experiment with three open-weights text-to-audio models:
+Scripts to experiment with four open-weights text-to-audio models:
 * [Stable Audio Open](https://huggingface.co/stabilityai/stable-audio-open-1.0)
 * [AudioLDM2](https://github.com/haoheliu/AudioLDM2)
 * [MMAudio](https://github.com/hkchengrex/MMAudio)
+* [MOSS-SoundEffect](https://huggingface.co/OpenMOSS-Team/MOSS-SoundEffect)
 
 Each model needs to be installed and run a bit differently, and in separate
 Python venvs due to conflicting dependencies. See

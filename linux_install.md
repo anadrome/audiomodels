@@ -35,3 +35,15 @@ source venv_mmaudio/bin/activate
 pip install "huggingface_hub<1.0" torchaudio
 pip install git+https://github.com/hkchengrex/MMAudio.git
 ```
+
+## MOSS-SoundEffect installation
+
+MOSS-SoundEffect depends on a specific version of pytorch.
+
+```bash
+python3 -m venv venv_mosssoundeffect
+source venv_mosssoundeffect/bin/activate
+git clone https://github.com/OpenMOSS/MOSS-TTS.git
+cd MOSS-TTS
+pip install -e ".[torch-runtime]" --extra-index-url https://download.pytorch.org/whl/cu128
+```
