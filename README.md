@@ -18,7 +18,7 @@ Once installed, there are three scripts for each model:
   generates 5000 audio files and will take a while!
 * `*_param_count.py`: Counts the number of parameters in each model. Added
   because I got frustrated trying to figure out how big the models were from
-  their papers (they are all around 1-2b parameters, as it turns out).
+  their papers/documentation.
 
 Our initial paper:
 

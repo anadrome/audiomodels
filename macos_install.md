@@ -1,5 +1,8 @@
 # macOS Installation
 
+Note March 2026: The macOS instructions below don't yet cover MOSS-SoundEffect
+(recently added to the Linux instructions).
+
 The three audio models we're using don't install and run as-is on macOS, but it
 is possible to make them work. This is here so that I remember the installation
 process and workarounds.
